@@ -8,6 +8,10 @@
 	#include <limits.h>
 	#include <stdint.h>
 	#include <unistd.h>
+  #include <stdlib.h>
+
+// My sphagetti code here
+int batstat = KALM;
 
 	static const char *
 	pick(const char *bat, const char *f1, const char *f2, char *path,
@@ -39,6 +43,28 @@
 		if (pscanf(path, "%d", &perc) != 1) {
 			return NULL;
 		}
+
+    if (perc < 5) {
+      if (batstat > PANIK) {
+        batstat = PANIK;
+        system("notify-send 'Very Low Battery' 'Panik! Battery under 5%'");
+      }
+    }
+    else if (perc < 10) {
+      if (batstat > STRESS) {
+        system("notify-send 'Low Battery' 'Battery is under 10%'");
+      }
+      batstat = STRESS;
+    }
+    else if (perc < 15) {
+      if (batstat > WOKE) {
+        system("notify-send 'Low Battery' 'Battery under 10%'");
+      }
+      batstat = WOKE;
+    }
+    else {
+      batstat = KALM;
+    }
 
 		return bprintf("%d", perc);
 	}

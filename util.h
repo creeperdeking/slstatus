@@ -7,6 +7,10 @@ extern char buf[1024];
 
 extern char *argv0;
 
+// My own sphagetti code
+enum battery_status {PANIK, STRESS, WOKE, KALM};
+extern int batstat;
+
 void warn(const char *, ...);
 void die(const char *, ...);
 
